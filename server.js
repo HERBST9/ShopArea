@@ -7,7 +7,9 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express')
 const app = express()
 const expressLayout = require('express-ejs-layouts')
-const shopRouter = require('./routes/index')
+const indexRouter = require('./routes/index')
+const sellersRouter = require('./routes/sellers')
+const bodyParser = require('body-parser')
 
 // MONGOOSE CONNECT //
 
@@ -24,10 +26,12 @@ app.set('views', __dirname + '/views')
 app.set('layout', 'layouts/layout')
 app.use(expressLayout)
 app.use(express.static('public'))
+app.use(bodyParser.urlencoded({ limit: '10mb', extended:false}))
  
 // ROUTER //
 
-app.use('/shop', shopRouter)
+app.use('/', indexRouter)
+app.use('/sellers', sellersRouter)
 
 
 // APP.LISTEN //
